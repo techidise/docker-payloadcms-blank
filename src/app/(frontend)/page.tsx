@@ -1,11 +1,13 @@
 import { headers as getHeaders } from 'next/headers.js'
 import Image from 'next/image'
+import Link from 'next/link'
 import { getPayload } from 'payload'
-import React from 'react'
 import { fileURLToPath } from 'url'
 
+import { queryArticleBySlug } from '@/data/queryArticles'
+
 import config from '@/payload.config'
-import './styles.css'
+import { Button } from '@/components/ui/button'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -16,7 +18,7 @@ export default async function HomePage() {
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
   return (
-    <div className="home">
+    <div className="flex flex-col items-center justify-center h-screen overflow-hidden">
       <div className="content">
         <picture>
           <source srcSet="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg" />
@@ -30,24 +32,29 @@ export default async function HomePage() {
         {!user && <h1 className="text-amber-300">Welcome to your new project.</h1>}
         {user && <h1>Welcome back, {user.email}</h1>}
         <div className="links">
-          <a
-            className="admin"
-            href={payloadConfig.routes.admin}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Go to admin panel
-          </a>
-          <a
-            className="docs"
-            href="https://payloadcms.com/docs"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Documentation
-          </a>
+          <Button asChild>
+            <Link
+              className="admin"
+              href={payloadConfig.routes.admin}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Go to admin panel
+            </Link>
+          </Button>
+          <Button asChild>
+            <Link
+              className="docs"
+              href="https://payloadcms.com/docs"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Documentation
+            </Link>
+          </Button>
         </div>
       </div>
+
       <div className="footer">
         <p>Update this page by editing</p>
         <a className="codeLink" href={fileURL}>
