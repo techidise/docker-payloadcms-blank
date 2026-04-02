@@ -2,11 +2,12 @@ import React from 'react'
 import './styles.css'
 import './globals.css'
 
+import NavBar from '@/components/base/NavBar'
 import { ThemeProvider } from '@/components/ui/darkmode/theme-provider'
 
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description: 'LIVE THICK - Sample PayloadCMS and Docker site',
+  title: 'Payload and Docker LVTK Website',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
@@ -23,6 +24,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
               enableSystem
               disableTransitionOnChange
             >
+              <NavBar />
               {children}
             </ThemeProvider>
           </main>

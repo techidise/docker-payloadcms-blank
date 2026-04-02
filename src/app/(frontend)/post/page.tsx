@@ -1,21 +1,55 @@
-import { initLocalApi } from '@/utils/initLocalApi'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 
-const PostPage = () => {
-  const queryArticleBySlug = async (slug: string) => {
-    const payload = await initLocalApi()
-    const data = await payload.find({
-      collection: 'articles',
-      limit: 1,
-      pagination: false,
-      where: {
-        slug: {
-          equals: slug,
-        },
-      },
-    })
-    return data.docs?.[0] || null
-  }
-  return <div></div>
+const payload = await getPayload({ config })
+
+const ArticlesPage = async () => {
+  const articles = await payload.find({
+    collection: 'articles',
+  })
+
+  return (
+    <div>
+      <h1>Articles</h1>
+
+      {articles.docs.map((article) => (
+        <div key={article.id}>
+          <h2>{article.id}</h2>
+          <h2>{article.title}</h2>
+          {/* <h2>{article.author}</h2> */}
+          {/* <p>{article.image}</p> */}
+        </div>
+      ))}
+    </div>
+  )
 }
 
-export default PostPage
+export default ArticlesPage
+
+// ==================== Original =========================== \\
+// import { getPayloadClient } from '@/lib/payload'
+// import type { Article } from '@/payload-types'
+
+// const ArticlesPage = async () => {
+//   const payload = await getPayloadClient()
+
+//   const articles = await payload.find({
+//     collection: 'articles',
+//     limit: 10,
+//     sort: '-createdAt',
+//   })
+
+//   return (
+//     <div>
+//       <h1>Articles</h1>
+
+//       {articles.docs.map((article: Article) => (
+//         <div key={article.id}>
+//           <h2>{article.title}</h2>
+//         </div>
+//       ))}
+//     </div>
+//   )
+// }
+
+// export default ArticlesPage
